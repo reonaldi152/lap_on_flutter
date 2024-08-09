@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../config/app_color.dart';
 import '../../config/pref.dart';
+import '../../viewmodel/auth_viewmodel.dart';
+import '../../widget/custom_toast.dart';
 import '../base_page.dart';
 import 'login_page.dart';
 
@@ -385,12 +387,10 @@ class _RegisterPageState extends State<RegisterPage> {
   //         setState(() {
   //           isLoading = false;
   //         });
-  //         await Session().setUserToken(response.data["access_token"]);
-  //         await Session().setUsername(response.data["user"]["name"].toString());
-  //         await Session().setUserId(response.data["user"]["id"].toString());
   //         if (!mounted) return;
+  //
   //         Navigator.of(context).pushAndRemoveUntil(
-  //             MaterialPageRoute(builder: (context) =>  WelcomePage(nama: response.data['user']['name'])),
+  //             MaterialPageRoute(builder: (_) => const BasePage()),
   //                 (Route<dynamic> route) => false);
   //
   //

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../config/app_color.dart';
 import '../../config/pref.dart';
+import '../../viewmodel/auth_viewmodel.dart';
+import '../../widget/custom_toast.dart';
 import '../base_page.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -139,13 +141,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   child: isLoading ? const Center(child: CircularProgressIndicator(color: AppColor.white, strokeWidth: 2,)) : TextButton(
                       onPressed: () {
-                        // if (isLoading == false &&
-                        //     _formKey.currentState!.validate()){
-                        //   setState(() {
-                        //     isLoading = true;
-                        //   });
-                        //   resetPassword();
-                        // }
+                        if (isLoading == false &&
+                            _formKey.currentState!.validate()){
+                          setState(() {
+                            isLoading = true;
+                          });
+                          resetPassword();
+                        }
                       },
                       child: Text(
                         "Reset Password",
@@ -165,12 +167,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                       border: Border.all(color: AppColor.colorPrimaryGreen)),
                   child: TextButton(
                       onPressed: () {
-                        // if (isLoadingRequest == false){
-                        //   setState(() {
-                        //     isLoadingRequest = true;
-                        //   });
-                        //   requestCode();
-                        // }
+                        if (isLoadingRequest == false){
+                          setState(() {
+                            isLoadingRequest = true;
+                          });
+                          requestCode();
+                        }
                       },
                       child: isLoadingRequest ? const Center(child: CircularProgressIndicator(color: AppColor.white,)) : Text(
                         "Kirim Ulang Kode",
@@ -189,36 +191,36 @@ class _ResetPasswordState extends State<ResetPassword> {
     );
   }
 
-  // requestCode(){
-  //   AuthViewmodel().requestCode(email: widget.email).then((value) {
-  //     if (value.code == 200){
-  //       setState(() {
-  //         isLoadingRequest = false;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         isLoadingRequest = false;
-  //       });
-  //       showToast(context: context, msg: value.message.toString());
-  //     }
-  //   });
-  // }
+  requestCode(){
+    AuthViewmodel().requestCode(email: widget.email).then((value) {
+      if (value.code == 200){
+        setState(() {
+          isLoadingRequest = false;
+        });
+      } else {
+        setState(() {
+          isLoadingRequest = false;
+        });
+        showToast(context: context, msg: value.message.toString());
+      }
+    });
+  }
 
-  // resetPassword(){
-  //   AuthViewmodel().resetPassword(code: codeController.text, password: passwordController.text).then((value) {
-  //     if (value.code == 200){
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //         Navigator.of(context).pushAndRemoveUntil(
-  //             MaterialPageRoute(builder: (_) => const BasePage()),
-  //                 (Route<dynamic> route) => false);
-  //     } else {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       showToast(context: context, msg: "Terjadi Kesalahan, Harap hubungi admin");
-  //     }
-  //   });
-  // }
+  resetPassword(){
+    AuthViewmodel().resetPassword(code: codeController.text, password: passwordController.text).then((value) {
+      if (value.code == 200){
+        setState(() {
+          isLoading = false;
+        });
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const BasePage()),
+                  (Route<dynamic> route) => false);
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        showToast(context: context, msg: "Terjadi Kesalahan, Harap hubungi admin");
+      }
+    });
+  }
 }

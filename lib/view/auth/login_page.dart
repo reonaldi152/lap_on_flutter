@@ -3,6 +3,8 @@ import 'package:flutter_lapon/view/auth/register_page.dart';
 import 'package:flutter_lapon/view/auth/request_code_password_page.dart';
 import '../../config/app_color.dart';
 import '../../config/pref.dart';
+import '../../viewmodel/auth_viewmodel.dart';
+import '../../widget/custom_toast.dart';
 import '../base_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -211,31 +213,31 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // login() {
-  //   AuthViewmodel()
-  //       .login(email: emailController.text, password: passwordController.text)
-  //       .then((value) async {
-  //     if (value.code == 200) {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       await Session().setUserToken(value.data["access_token"]);
-  //       await Session().setUserId(value.data["user"]["id"].toString());
-  //       if (!mounted) return;
-  //       // Navigator.of(context).pushAndRemoveUntil(
-  //       //     MaterialPageRoute(
-  //       //         builder: (context) =>
-  //       //             WelcomePage(nama: value.data['user']['name'])),
-  //       //     (Route<dynamic> route) => false);
-  //       Navigator.of(context).pushAndRemoveUntil(
-  //           MaterialPageRoute(builder: (_) => const BasePage()),
-  //               (Route<dynamic> route) => false);
-  //     } else {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       showToast(context: context, msg: value.message.toString());
-  //     }
-  //   });
-  // }
+  login() {
+    AuthViewmodel()
+        .login(email: emailController.text, password: passwordController.text)
+        .then((value) async {
+      if (value.code == 200) {
+        setState(() {
+          isLoading = false;
+        });
+        await Session().setUserToken(value.data["access_token"]);
+        await Session().setUserId(value.data["user"]["id"].toString());
+        if (!mounted) return;
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(
+        //         builder: (context) =>
+        //             WelcomePage(nama: value.data['user']['name'])),
+        //     (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const BasePage()),
+                (Route<dynamic> route) => false);
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        showToast(context: context, msg: value.message.toString());
+      }
+    });
+  }
 }

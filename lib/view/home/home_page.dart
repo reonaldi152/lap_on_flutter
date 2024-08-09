@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lapon/config/app_color.dart';
+import 'package:flutter_lapon/view/venue/venue_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -140,39 +141,44 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 32),
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                    color: AppColor.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff94A8BE).withOpacity(0.3),
-                        spreadRadius: 0.1,
-                        blurRadius: 4,
-                        offset: const Offset(0.5, 0), // changes position of shadow
-                      )
-                    ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset("assets/field1.png", width: 340,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Taruna Mandiri", style: fontTextStyle.copyWith(color: AppColor.black, fontWeight: FontWeight.w700),),
-                          const SizedBox(height: 4),
-                          Text("Jl.Salak, Pamulang", style: fontTextStyle.copyWith(color: AppColor.black.withOpacity(0.5), fontSize: 12),),
-                          const SizedBox(height: 10),
-                          Text("Rp. 150.000/jam", style: fontTextStyle.copyWith(color: AppColor.black, fontWeight: FontWeight.w700),),
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const VenueDetailPage(),));
+              },
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                      color: AppColor.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff94A8BE).withOpacity(0.3),
+                          spreadRadius: 0.1,
+                          blurRadius: 4,
+                          offset: const Offset(0.5, 0), // changes position of shadow
+                        )
+                      ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset("assets/field1.png", width: 340,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Taruna Mandiri", style: fontTextStyle.copyWith(color: AppColor.black, fontWeight: FontWeight.w700),),
+                            const SizedBox(height: 4),
+                            Text("Jl.Salak, Pamulang", style: fontTextStyle.copyWith(color: AppColor.black.withOpacity(0.5), fontSize: 12),),
+                            const SizedBox(height: 10),
+                            Text("Rp. 150.000/jam", style: fontTextStyle.copyWith(color: AppColor.black, fontWeight: FontWeight.w700),),
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

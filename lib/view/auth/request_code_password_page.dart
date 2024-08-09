@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lapon/view/auth/reset_password.dart';
 
 import '../../config/app_color.dart';
 import '../../config/pref.dart';
+import '../../viewmodel/auth_viewmodel.dart';
+import '../../widget/custom_toast.dart';
 
 class RequestCodePasswordPage extends StatefulWidget {
   const RequestCodePasswordPage({super.key});
@@ -93,13 +96,13 @@ class _RequestCodePasswordPageState extends State<RequestCodePasswordPage> {
                   ),
                   child: isLoading ? const Center(child: CircularProgressIndicator(color: AppColor.white, strokeWidth: 2,)) : TextButton(
                       onPressed: () {
-                        // if (isLoading == false &&
-                        //     _formKey.currentState!.validate()){
-                        //   setState(() {
-                        //     isLoading = true;
-                        //   });
-                        //   requestCode();
-                        // }
+                        if (isLoading == false &&
+                            _formKey.currentState!.validate()){
+                          setState(() {
+                            isLoading = true;
+                          });
+                          requestCode();
+                        }
                       },
                       child: isLoading ? const Center(child: CircularProgressIndicator(color: AppColor.white,)) : Text(
                         "Kirim Sekarang",
@@ -118,19 +121,19 @@ class _RequestCodePasswordPageState extends State<RequestCodePasswordPage> {
     );
   }
 
-  // requestCode(){
-  //   AuthViewmodel().requestCode(email: emailController.text).then((value) {
-  //     if (value.code == 200){
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPassword(email: emailController.text),));
-  //     } else {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       showToast(context: context, msg: value.message.toString());
-  //     }
-  //   });
-  // }
+  requestCode(){
+    AuthViewmodel().requestCode(email: emailController.text).then((value) {
+      if (value.code == 200){
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPassword(email: emailController.text),));
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        showToast(context: context, msg: value.message.toString());
+      }
+    });
+  }
 }
