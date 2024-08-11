@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lapon/config/app_color.dart';
+import 'package:flutter_lapon/view/marketplace/product_detail/product_detail_page.dart';
 
 class MarketplacePage extends StatefulWidget {
   const MarketplacePage({super.key});
@@ -321,6 +322,96 @@ class _MarketplacePageState extends State<MarketplacePage> {
               ),
             ),
             const SizedBox(height: 30),
+
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailPage(),));
+              },
+              child: Card(
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                color: AppColor.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                elevation: 4.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.favorite_border,
+                          color: Colors.teal,
+                        ),
+                      ),
+                      // Center(
+                      //   child: Image.network(
+                      //     'https://moltensports.com/images/products/20200807_162244basketball-GG7X-700px.png',
+                      //     width: 120,
+                      //     height: 120,
+                      //   ),
+                      // ),
+                      Center(
+                        child: Image.asset(
+                          'assets/basket.png',
+                          width: 120,
+                          height: 120,
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
+                      Text(
+                        'For Lifestyle',
+                        style: fontTextStyle.copyWith(
+                          color: Colors.grey,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                      Text(
+                        'Basket Ball',
+                        style: fontTextStyle.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'This edition features bold pops of color & amplified detailing.',
+                        style: fontTextStyle.copyWith(
+                          color: Colors.grey,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Rp 990.000',
+                            style: fontTextStyle.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text('Sewa'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 24),
             //   child: Row(
