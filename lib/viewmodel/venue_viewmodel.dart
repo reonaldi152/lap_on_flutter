@@ -42,4 +42,11 @@ class VenueViewmodel {
     Resp data = Resp.fromJson(resp);
     return data;
   }
+
+  Future<Resp> scheduleVenue({venueID, date}) async {
+
+    var resp = await Network.getApi("${Endpoint.venueUrl}/$venueID/schedules?date=$date");
+    Resp data = Resp.fromJson(resp);
+    return data;
+  }
 }

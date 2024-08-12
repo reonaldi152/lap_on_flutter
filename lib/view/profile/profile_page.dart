@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lapon/view/profile/ubah_profile_page.dart';
 import '../../config/app_color.dart';
 import '../../config/pref.dart';
+import '../../model/user/user.dart';
+import '../../viewmodel/auth_viewmodel.dart';
 import '../../widget/custom_toast.dart';
 import '../auth/request_code_password_page.dart';
 import '../base_page.dart';
@@ -17,21 +19,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    // getUserProfile();
+    getUserProfile();
     // logout();
     super.initState();
   }
 
-  // void logout() async {
-  //   await Session().logout();
-  //   if (!mounted) return;
-  //   Navigator.of(context).pushAndRemoveUntil(
-  //       MaterialPageRoute(builder: (_) => const BasePage()),
-  //           (Route<dynamic> route) => false);
-  //   showToast(
-  //       context: context,
-  //       msg: "Logout Berhasil");
-  // }
+  void logout() async {
+    await Session().logout();
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const BasePage()),
+            (Route<dynamic> route) => false);
+    showToast(
+        context: context,
+        msg: "Logout Berhasil");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -317,19 +319,19 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-//
-// Users? _users;
-// getUserProfile() async {
-//   String? token = await Session().getUserToken();
-//
-//   if (token != null) {
-//     AuthViewmodel().userDetail().then((value) {
-//       if (value.code == 200) {
-//         setState(() {
-//           _users = Users.fromJson(value.data);
-//         });
-//       }
-//     });
-//   }
-// }
+
+Users? _users;
+getUserProfile() async {
+  String? token = await Session().getUserToken();
+
+  if (token != null) {
+    AuthViewmodel().userDetail().then((value) {
+      if (value.code == 200) {
+        setState(() {
+          _users = Users.fromJson(value.data);
+        });
+      }
+    });
+  }
+}
 }

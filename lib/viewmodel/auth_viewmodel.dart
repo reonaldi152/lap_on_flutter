@@ -51,8 +51,9 @@ class AuthViewmodel {
 
     var header = <String, dynamic>{};
     header[HttpHeaders.authorizationHeader] = 'Bearer $token';
+    debugPrint("ini header user detail $header");
 
-    var resp = await Network.postApiWithHeadersWithoutData(
+    var resp = await Network.getApiWithHeaders(
         Endpoint.userDetailUrl, header);
     Resp data = Resp.fromJson(resp);
     return data;
