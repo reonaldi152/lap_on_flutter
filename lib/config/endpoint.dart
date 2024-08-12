@@ -16,4 +16,6 @@ class Endpoint {
 
   static const String bannerUrl = 'api/banners';
 
+  static const String bookingUrl = 'api/bookings';
+
 }

@@ -17,9 +17,9 @@ class BookingPage extends StatefulWidget {
 class _BookingPageState extends State<BookingPage> {
   DateTime _dateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day); // Inisialisasi dengan tanggal saat ini tanpa waktu
   ScheduleModel? _scheduleModel;
-  List<DataSchedule> selectedSchedules = [];
+  DataSchedule? selectedSchedule;
   double totalPrice = 0.0;
-
+  bool isSelected = false;
 
   @override
   void initState() {
@@ -113,16 +113,19 @@ class _BookingPageState extends State<BookingPage> {
                   _scheduleModel!.schedules!.length,
                       (index) {
                     DataSchedule data = _scheduleModel!.schedules![index];
-                    bool isSelected = selectedSchedules.contains(data);
+                    setState(() {
+                      isSelected = selectedSchedule == data;
+
+                    });
                     return GestureDetector(
                       onTap: () {
                         setState(() {
                           if (isSelected) {
-                            selectedSchedules.remove(data);
-                            totalPrice -= _scheduleModel!.venue!.price!;
+                            selectedSchedule = null;
+                            totalPrice = 0.0;
                           } else {
-                            selectedSchedules.add(data);
-                            totalPrice += _scheduleModel!.venue!.price!;
+                            selectedSchedule = data;
+                            totalPrice = double.parse(_scheduleModel!.venue!.price!);
                           }
                         });
                       },
@@ -227,7 +230,7 @@ class _BookingPageState extends State<BookingPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Total : ${selectedSchedules.length} Sesi terpilih",
+                    "Total : ${selectedSchedule != null ? 1 : 0} Sesi terpilih",
                     style: fontTextStyle.copyWith(
                       color: const Color(0xFF121212),
                       fontSize: 12,
@@ -243,12 +246,26 @@ class _BookingPageState extends State<BookingPage> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CheckoutPage(),
-                    ),
-                  );
+                  if (selectedSchedule != null) {
+                    String formattedStartTime = selectedSchedule!.start_time.substring(0, 5);
+                    String formattedEndTime = selectedSchedule!.end_time.substring(0, 5);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CheckoutPage(
+                          venueId: widget.venueId,
+                          bookingDate: "${_dateTime.year.toString().padLeft(4, '0')}-${_dateTime.month.toString().padLeft(2, '0')}-${_dateTime.day.toString().padLeft(2, '0')}",
+                          startTime: formattedStartTime,
+                          endTime: formattedEndTime,
+                          totalPayment: totalPrice,
+                          categoryId: _scheduleModel?.venue?.categoryId,
+                        ),
+                      ),
+                    );
+                  } else {
+                    // Tampilkan alert atau pesan bahwa pengguna harus memilih jadwal terlebih dahulu
+                  }
+
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 11, horizontal: 16),
@@ -286,5 +303,8 @@ class _BookingPageState extends State<BookingPage> {
       },
     );
   }
+
+
 }
+
 

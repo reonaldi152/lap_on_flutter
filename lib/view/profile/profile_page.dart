@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
-      body: Column(
+      body: _users == null ? const Center(child: CircularProgressIndicator(color: AppColor.colorPrimaryGreen,)) : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
@@ -119,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       Text(
-                        "John Doe",
+                        _users?.name ?? "",
                         style: fontTextStyle.copyWith(
                           fontSize: 16,
                           color: const Color(0xFF252A31),
@@ -129,13 +129,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Text(
-                          "johndoe@gmail.com",
+                          _users?.email ?? "",
                           style:
                           fontTextStyle.copyWith(color: const Color(0xFF4F5E71)),
                         ),
                       ),
                       Text(
-                        "0808800",
+                        _users?.phone ?? "",
                         style:
                         fontTextStyle.copyWith(color: const Color(0xFF4F5E71)),
                       )
@@ -276,30 +276,30 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(width: 5),
           TextButton(
             onPressed: () async {
-              await Session().logout();
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (_) => const BasePage()),
-                      (Route<dynamic> route) => false);
-              showToast(
-                  context: context,
-                  msg: "Logout Berhasil");
-              // AuthViewmodel().logout().then((value) async {
-              //   if (value.code == 200) {
-              //     await Session().logout();
-              //     if (!mounted) return;
-              //     Navigator.of(context).pushAndRemoveUntil(
-              //         MaterialPageRoute(builder: (_) => const BasePage()),
-              //             (Route<dynamic> route) => false);
-              //     showToast(
-              //         context: context,
-              //         msg: "Logout Berhasil");
-              //
-              //   } else {
-              //     showToast(
-              //         context: context,
-              //         msg: "Terjadi Kesalahan");
-              //   }
-              // });
+              // await Session().logout();
+              // Navigator.of(context).pushAndRemoveUntil(
+              //     MaterialPageRoute(builder: (_) => const BasePage()),
+              //         (Route<dynamic> route) => false);
+              // showToast(
+              //     context: context,
+              //     msg: "Logout Berhasil");
+              AuthViewmodel().logout().then((value) async {
+                if (value.code == 200) {
+                  await Session().logout();
+                  if (!mounted) return;
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const BasePage()),
+                          (Route<dynamic> route) => false);
+                  showToast(
+                      context: context,
+                      msg: "Logout Berhasil");
+
+                } else {
+                  showToast(
+                      context: context,
+                      msg: "Terjadi Kesalahan");
+                }
+              });
             },
             style: OutlinedButton.styleFrom(
                 backgroundColor: AppColor.colorPrimaryGreen,
